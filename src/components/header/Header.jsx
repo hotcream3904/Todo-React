@@ -1,18 +1,17 @@
 import React from 'react'
 import { MdSunny } from "react-icons/md";
 
-export default function Header() {
+
+export default function Header({filterList, setFilter}) {
   return (
     <header>
       <div>
          <MdSunny />
       </div>
       <div>
-         <ul>
-           <li>All</li>
-           <li>Active</li>
-           <li>Completed</li>
-         </ul>
+         {filterList.map((value, index)=>{
+          return <div key={index}><button onClick={()=>setFilter(value)}>{value}</button></div>
+         })}
       </div>
     </header>
   )

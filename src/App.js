@@ -1,45 +1,31 @@
 import './App.css';
-
 import { useState } from "react";
 import Header from "./components/header/Header.jsx";
 import Todos from "./components/todos/Todos.jsx";
 import UserInput from "./components/userInput/UserInput.jsx";
 
+const filterList = ['All', 'Active', 'Completed']
+
 function App() {
+const [filter, setFilter] = useState(filterList[0])
 const [todos, setTodos] = useState([
   {
   id : 123,
-  status: "active",
+  status: "Active",
   text: "메롱"
  },
  {
   id : 124,
-  status: "active",
+  status: "Active",
   text: "메롱2"
  },
 ])
-const [todo, setTodo] = useState("")
-const generateId = () => `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-function handleAddTodo () {
-  const newTodo = {
-    id : generateId(),
-    status : "active",
-    text : todo
-  }
-  setTodos([...todos, newTodo])
-  setTodo("")
-}
-function handleChangeTodo(e) {
-  setTodo(e.target.value)
-}
-
 
 return (
   <>
-    <Header />
-    <Todos todos={todos} setTodos={setTodos}/>
-    <UserInput handleChangeTodo={handleChangeTodo} todo={todo} handleAddTodo={handleAddTodo}/>
+    <Header filterList={filterList} setFilter={setFilter}/>
+    <Todos filter={filter} todos={todos} setTodos={setTodos}/>
+    <UserInput todos={todos} setTodos={setTodos}/>
   </>
   );
 }
