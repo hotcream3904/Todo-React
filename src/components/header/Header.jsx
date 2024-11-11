@@ -9,9 +9,9 @@ export default function Header({filterList, setFilter}) {
          <MdSunny />
       </div>
       <div>
-         {filterList.map((value, index)=>{
-          return <div key={index}><button onClick={()=>setFilter(value)}>{value}</button></div>
-         })}
+       {filterList.map((value, index)=>(
+          <div key={index}><button onClick={()=>setFilter(value)}>{value}</button></div>
+       ))}
       </div>
     </header>
   )

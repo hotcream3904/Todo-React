@@ -1,13 +1,12 @@
 import React from 'react'
-import { FaTrashAlt } from "react-icons/fa";
+import Todo from "./Todo";
 
 export default function Todos({filter, todos, setTodos}) {
-  function handleDeleteTodo(id) {
+   const handleDeleteTodo = (id) => {
     setTodos(todos.filter((todo)=> todo.id !== id))
   }
 
-
-  function handleCheckTodo(todo) {
+   const handleCheckTodo = (todo) => {
     const {status, id, text} = todo
     const newTodo = {
       id,
@@ -18,22 +17,14 @@ export default function Todos({filter, todos, setTodos}) {
     setTodos(newTodos)
   }
 
-  const filterd = getFilterdTodo(todos,filter)
+  const filtered = getFilterdTodo(todos,filter)
+
   return (
   <main>
     <div className="todos">
-      {filterd.map(todo => todo.status === "Active"?
-         <div className="todo" key={todo.id}>
-           <input type="checkbox" id="checkbox" onChange={()=>handleCheckTodo(todo)}/>
-           <p>{todo.text}</p>
-           <button className="deleteButton" onClick={()=>handleDeleteTodo(todo.id)}><FaTrashAlt /></button>
-         </div> :
-         <div className="todo" key={todo.id}>
-           <input type="checkbox" id="checkbox" onChange={()=>handleCheckTodo(todo)}/>
-           <p style={{textDecoration : 'line-through'}}>{todo.text}</p>
-           <button className="deleteButton" onClick={()=>handleDeleteTodo(todo.id)}><FaTrashAlt /></button>
-         </div>)
-      }
+      {filtered.map(
+        todo => <Todo todo={todo} handleCheckTodo={handleCheckTodo} handleDeleteTodo={handleDeleteTodo}/>
+      )}
     </div>
   </main>
   )

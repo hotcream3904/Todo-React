@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
-export default function UserInput() {
-const [todo, setTodo] = useState("")
 const generateId = () => `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-function handleAddTodo ({todos, setTodos}) {
+export default function UserInput({todos, setTodos}) {
+const [todo, setTodo] = useState("")
+
+const handleAddTodo = () => {
   const newTodo = {
     id : generateId(),
     status : "Active",
