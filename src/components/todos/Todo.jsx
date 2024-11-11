@@ -3,6 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export default function Todo({todo, handleCheckTodo, handleDeleteTodo}) {
 
+
   const {id, text, status} = todo
 
   return (

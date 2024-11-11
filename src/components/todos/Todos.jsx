@@ -2,6 +2,8 @@ import React from 'react'
 import Todo from "./Todo";
 
 export default function Todos({filter, todos, setTodos}) {
+
+
    const handleDeleteTodo = (id) => {
     setTodos(todos.filter((todo)=> todo.id !== id))
   }
