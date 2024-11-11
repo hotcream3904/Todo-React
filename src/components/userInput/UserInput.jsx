@@ -1,18 +1,21 @@
+import axios from "axios";
 import React, { useState } from 'react'
-
-const generateId = () => `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 export default function UserInput({todos, setTodos}) {
 const [todo, setTodo] = useState("")
 
+
 const handleAddTodo = () => {
-  const newTodo = {
-    id : generateId(),
-    status : "Active",
-    text : todo
+  const postTodo = {
+    "text" : todo
   }
-  setTodos([...todos, newTodo])
-  setTodo("")
+  axios.post(`${process.env.REACT_APP_API_URL}/`, postTodo)
+  .then(response => {
+    console.log("데이터 전송 성공:", response);
+  })
+  .catch(error => {
+    console.error("데이터 전송 실패:", error);
+  });
 }
 function handleChangeTodo(e) {
   setTodo(e.target.value)

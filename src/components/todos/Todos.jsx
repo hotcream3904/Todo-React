@@ -25,7 +25,8 @@ export default function Todos({filter, todos, setTodos}) {
   <main>
     <div className="todos">
       {filtered.map(
-        todo => <Todo todo={todo} handleCheckTodo={handleCheckTodo} handleDeleteTodo={handleDeleteTodo}/>
+        todo =>
+        <Todo key={todo.id} todo={todo} handleCheckTodo={handleCheckTodo} handleDeleteTodo={handleDeleteTodo}/>
       )}
     </div>
   </main>
