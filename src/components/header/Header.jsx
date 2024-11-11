@@ -1,8 +1,17 @@
+import axios from "axios";
 import React from 'react'
 import { MdSunny } from "react-icons/md";
 
 
-export default function Header({filterList, setFilter}) {
+export default function Header({filterList, setFilter, setTodos}) {
+
+  const handleFilterTodo = (value) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/${value === "All" ? "" : value}`)
+    .then(response => setTodos(response.data))
+    .catch(error => console.error("Error fetching data: ", error))
+    setFilter(value)
+  }
+
   return (
     <header>
       <div>
@@ -10,7 +19,7 @@ export default function Header({filterList, setFilter}) {
       </div>
       <div>
        {filterList.map((value, index)=>(
-          <div key={index}><button onClick={()=>setFilter(value)}>{value}</button></div>
+          <div key={index}><button onClick={()=>handleFilterTodo(value)}>{value}</button></div>
        ))}
       </div>
     </header>

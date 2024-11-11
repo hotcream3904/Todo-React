@@ -23,7 +23,7 @@ useEffect(() => {
 
 return (
   <>
-    <Header filterList={filterList} setFilter={setFilter}/>
+    <Header filterList={filterList} setFilter={setFilter} setTodos={setTodos}/>
     <Todos filter={filter} todos={todos} setTodos={setTodos}/>
     <UserInput todos={todos} setTodos={setTodos}/>
   </>

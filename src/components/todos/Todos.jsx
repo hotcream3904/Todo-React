@@ -1,22 +1,19 @@
 import React from 'react'
 import Todo from "./Todo";
+import axios from "axios";
 
 export default function Todos({filter, todos, setTodos}) {
 
-
    const handleDeleteTodo = (id) => {
-    setTodos(todos.filter((todo)=> todo.id !== id))
+    axios.delete(`${process.env.REACT_APP_API_URL}/${id}`)
+    .then(response => console.log('response :>> ', response))
+    .catch(error => console.error("Error fetching data: ", error));
   }
 
    const handleCheckTodo = (todo) => {
-    const {status, id, text} = todo
-    const newTodo = {
-      id,
-      status : status === "Active" ? "Completed" : "Active",
-      text
-    }
-    const newTodos = todos.map((todo)=> todo.id === id ? newTodo : todo)
-    setTodos(newTodos)
+    axios.put(`${process.env.REACT_APP_API_URL}/${todo.id}`)
+    .then(response => console.log('response :>> ', response))
+    .catch(error => console.error("Error fetching data: ", error));
   }
 
   const filtered = getFilterdTodo(todos,filter)
