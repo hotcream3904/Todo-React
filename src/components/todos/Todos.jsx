@@ -1,38 +1,39 @@
 import React from 'react'
 import Todo from "./Todo";
-import axios from "axios";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteTodo } from "../../api/todo";
 
-export default function Todos({filter, todos, setTodos}) {
+export default function Todos({todos, setTodos}) {
 
+  const client = useQueryClient();
+
+  const deleteMutation = useMutation(deleteTodo, {
+    onSuccess: () => {
+      // 데이터를 다시 가져오도록 설정 (예: todos 목록을 최신화)
+      client.invalidateQueries('todos');
+    },
+    onError: (error) => {
+      console.error("Error deleting todo:", error);
+    },
+  })
    const handleDeleteTodo = (id) => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/${id}`)
-    .then(response => console.log('response :>> ', response))
-    .catch(error => console.error("Error fetching data: ", error));
+    deleteMutation.mutate(id)
   }
 
-   const handleCheckTodo = (todo) => {
-    axios.put(`${process.env.REACT_APP_API_URL}/${todo.id}`)
-    .then(response => console.log('response :>> ', response))
+   const handleCheckTodo = async (todo) => {
+    await axios.put(`${process.env.REACT_APP_API_URL}/${todo.id}`)
     .catch(error => console.error("Error fetching data: ", error));
   }
-
-  const filtered = getFilterdTodo(todos,filter)
 
   return (
   <main>
     <div className="todos">
-      {filtered.map(
+      {todos.map(
         todo =>
         <Todo key={todo.id} todo={todo} handleCheckTodo={handleCheckTodo} handleDeleteTodo={handleDeleteTodo}/>
       )}
     </div>
   </main>
   )
-}
-
-function getFilterdTodo(todos, filter) {
-  if(filter === 'All') {
-    return todos
-  }
-  return todos.filter((todo)=> todo.status === filter)
 }

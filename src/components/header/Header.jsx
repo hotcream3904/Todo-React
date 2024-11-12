@@ -5,8 +5,8 @@ import { MdSunny } from "react-icons/md";
 
 export default function Header({filterList, setFilter, setTodos}) {
 
-  const handleFilterTodo = (value) => {
-    axios.get(`${process.env.REACT_APP_API_URL}/${value === "All" ? "" : value}`)
+  const handleFilterTodo = async (value) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}/${value === "All" ? "" : value}`)
     .then(response => setTodos(response.data))
     .catch(error => console.error("Error fetching data: ", error))
     setFilter(value)
